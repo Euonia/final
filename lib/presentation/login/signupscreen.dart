@@ -8,7 +8,7 @@ import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:flutter_redux/flutter_redux.dart";
 
-class LoginScreen extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(40.0),
-              child: _LoginForm(),
+              child: _SignUpForm(),
             ),
             PrivacySettingsButton(),
           ],
@@ -34,23 +34,25 @@ class LoginScreen extends StatelessWidget {
 }
 
 
-// MARK: Login Form
+// MARK:SignUp Form
 
-class _LoginForm extends StatefulWidget {
+class _SignUpForm extends StatefulWidget {
   @override
-  _LoginFormState createState() {
-    return _LoginFormState();
+  _SignUpFormState createState() {
+    return _SignUpFormState();
   }
 }
 
-class _LoginFormState extends State<_LoginForm> {
+class _SignUpFormState extends State<_SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final _userTextEditingController = TextEditingController();
+  final _userNameTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
 
   @override
   void dispose() {
     // Suggested to be disposed: https://flutter.dev/docs/cookbook/forms/retrieve-input#1-create-a-texteditingcontroller
+    _userNameTextEditingController.dispose();
     _userTextEditingController.dispose();
     _passwordTextEditingController.dispose();
     super.dispose();
@@ -60,15 +62,16 @@ class _LoginFormState extends State<_LoginForm> {
   Widget build(BuildContext context) {
     final submitCallback = () {
       if (_formKey.currentState.validate()) {
-        final loginAction = LogIn(
+        final signupAction = SignUp(
+            username:_userNameTextEditingController.text,
             email: _userTextEditingController.text,
             password: _passwordTextEditingController.text);
 
-        StoreProvider.of<AppState>(context).dispatch(loginAction);
+        StoreProvider.of<AppState>(context).dispatch(signupAction);
         Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text("Logging you in...")));
+            .showSnackBar(SnackBar(content: Text("Signing you in...")));
 
-        loginAction.completer.future.catchError((error) {
+        signupAction.completer.future.catchError((error) {
           Scaffold.of(context).hideCurrentSnackBar();
           Logger.w(error.code.toString());
           Scaffold.of(context).showSnackBar(SnackBar(
@@ -79,9 +82,20 @@ class _LoginFormState extends State<_LoginForm> {
     };
 
     final submitButton =
-        AuthButton(buttonText: "Login", onPressedCallback: submitCallback);
+    AuthButton(buttonText: "SignUp", onPressedCallback: submitCallback);
 
     final _userTextField = TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(labelText: "Username"),
+      controller: _userNameTextEditingController,
+      validator: (value) {
+        if (value.isEmpty) {
+          return "Please enter your Username";
+        }
+        return null;
+      },
+    );
+    TextFormField(
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(labelText: "Email"),
       controller: _userTextEditingController,

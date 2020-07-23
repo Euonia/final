@@ -12,8 +12,18 @@ class LogIn {
 
   LogIn({this.email, this.password, Completer completer})
       : completer = completer ?? Completer();
-}
 
+}
+class SignUp {
+  final String username;
+  final String email;
+  final String password;
+  final Completer completer;
+
+  SignUp({this.username,this.email, this.password, Completer completer})
+      : completer = completer ?? Completer();
+
+}
 @immutable
 class OnAuthenticated {
   final User user;

@@ -27,6 +27,7 @@ import "package:circles_app/presentation/image/file_picker_screen.dart";
 import "package:circles_app/presentation/image/image_pinch_screen.dart";
 import "package:circles_app/presentation/image/image_screen.dart";
 import "package:circles_app/presentation/login/loginscreen.dart";
+import 'package:circles_app/presentation/login/signupscreen.dart';
 import "package:circles_app/presentation/settings/settings_screen.dart";
 import "package:circles_app/presentation/user/user_screen.dart";
 import "package:circles_app/routes.dart";
@@ -141,6 +142,9 @@ class _CirclesAppState extends State<CirclesApp> {
         navigatorKey: _navigatorKey,
         theme: AppTheme.theme,
         routes: {
+          Routes.signup:(context){
+            return SignUpScreen();
+          },
           Routes.login: (context) {
             return LoginScreen();
           },
