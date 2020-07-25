@@ -18,7 +18,7 @@ class AppTheme {
   static final colorDarkBlueImageSelection = HexColor("#04188A");
   static const colorDarkGreen = Color.fromRGBO(33, 127, 125, 1.0);
   static const colorLightGreen = Color.fromRGBO(207, 244, 234, 1.0);
-  static const colorMintGreen = Color.fromRGBO(54, 207, 166, 1.0);
+  static const colorMintGreen = Color.fromRGBO(255, 72, 103, 1.0);
   static const colorRed = Color.fromRGBO(255, 72, 103, 1.0);
   static const colorShadow = Color.fromRGBO(204, 204, 204, 1.0);
   static const colorTextDisabled = Color.fromRGBO(153, 153, 153, 1.0);
